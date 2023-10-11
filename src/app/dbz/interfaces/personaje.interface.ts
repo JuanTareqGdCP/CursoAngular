@@ -1,5 +1,6 @@
 
 export interface Personaje {
   name: string,
-  power: number
+  power: number,
+  id?: string
 }

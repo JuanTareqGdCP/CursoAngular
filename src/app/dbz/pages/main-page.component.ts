@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Personaje } from '../interfaces/personaje.interface';
+import { DBZService } from '../services/dbz.services';
 
 @Component({
   selector: 'app-dbz-main-page',
@@ -8,28 +9,19 @@ import { Personaje } from '../interfaces/personaje.interface';
 
 
 export class MainPageComponent implements OnInit {
-  public characters: Personaje[] = [{
-    name: 'Krillin',
-    power: 500
-  },
-  {
-    name: 'Goku',
-    power: 9500
-  },
-  {
-    name: 'Vegeta',
-    power: 7500
-  }]
 
-  constructor() { }
+  constructor(private dbzService: DBZService) {  }
 
-  onNewPersonaje(personaje: Personaje): void {
-    console.log('Personaje: ', personaje);
-    this.characters.push(personaje);
+  get characters(): Personaje[] {
+    return [...this.dbzService.characters];
   }
 
-  onDeletePersonaje(index: number) {
-    this.characters.splice(index, 1);
+  onDeletePersonaje(id: string): void {
+    this.dbzService.borrarPersonajePorId(id);
+  }
+
+  onNewPersonaje(personaje:Personaje) {
+    this.dbzService.onNewPersonaje(personaje);
   }
 
   ngOnInit() { }
